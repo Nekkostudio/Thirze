@@ -1,0 +1,746 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#050D1A">
+  <title>THIRZE© — Science. Performance. Purity.</title>
+  <link href="https://fonts.cdnfonts.com/css/nexa" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:#050D1A; --surface:#0A1628; --surface-alt:#071020;
+      --accent:#1E6FD9; --accent-bright:#3B8EFF;
+      --fg:#FFFFFF; --muted:rgba(255,255,255,.62);
+      --border:rgba(255,255,255,.08); --accent-border:rgba(30,111,217,.2);
+      --font-display:'Nexa','Montserrat',system-ui,sans-serif;
+      --font-body:'Montserrat',system-ui,sans-serif;
+      --max-w:1200px;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth;overflow-x:hidden}
+    body{background:var(--bg);color:var(--fg);font-family:var(--font-body);font-weight:300;line-height:1.75;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+    img{max-width:100%;display:block}
+    a{text-decoration:none;color:inherit}
+    .eyebrow{display:block;font-size:11px;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:var(--accent)}
+    .eyebrow-line{display:block;width:80px;height:2px;background:var(--accent);margin-top:10px;margin-bottom:28px}
+    .section-heading{font-family:var(--font-display);font-size:clamp(28px,3.5vw,46px);font-weight:400;line-height:1.15;letter-spacing:-.01em;display:flex;align-items:flex-start;gap:14px}
+    .section-heading .sh-icon{flex-shrink:0;margin-top:.12em}
+    .container{max-width:var(--max-w);margin:0 auto;padding:0 40px}
+    section{padding:100px 0}
+    .img-placeholder{background:rgba(30,111,217,.06);border:1px solid rgba(30,111,217,.15);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);width:100%}
+    .r16-9{aspect-ratio:16/9}
+    .fade-up{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+    .fade-up.visible{opacity:1;transform:none}
+    @keyframes borderGlow{0%,100%{box-shadow:0 0 0 0 rgba(30,111,217,0),0 0 8px 0 rgba(30,111,217,0);border-color:rgba(30,111,217,.18)}50%{box-shadow:0 0 0 2px rgba(59,142,255,.18),0 0 20px 4px rgba(30,111,217,.35);border-color:rgba(59,142,255,.65)}}
+    @keyframes glowPulse{0%,100%{opacity:.5;transform:translateX(-50%) scale(1)}50%{opacity:1;transform:translateX(-50%) scale(1.2)}}
+    .cta-link{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);transition:gap .25s ease;background:none;border:none;cursor:pointer;font-family:var(--font-body)}
+    .cta-link:hover{gap:14px}
+    .badge-pill{display:inline-block;border:1px solid var(--accent-border);border-radius:100px;padding:7px 18px;font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+    .navbar{position:fixed;top:0;left:0;right:0;z-index:1000;padding:24px 40px;display:flex;align-items:center;justify-content:space-between;transition:background .4s,backdrop-filter .4s,box-shadow .4s}
+    .navbar.scrolled{background:rgba(10,22,40,.96);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:0 1px 0 var(--border)}
+    .navbar-logo{height:36px;width:auto;cursor:pointer}
+    .nav-center{display:flex;align-items:center;gap:40px}
+    .nav-link{font-size:11px;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.7);transition:color .2s;cursor:pointer;background:none;border:none;font-family:var(--font-body)}
+    .nav-link:hover,.nav-link.active{color:var(--accent)}
+    .nav-right{display:flex;align-items:center;gap:16px}
+    .lang-fab{position:fixed;bottom:28px;right:28px;z-index:1100}
+    .lang-pick-btn{background:rgba(10,22,40,.92);border:1px solid var(--border);border-radius:8px;cursor:pointer;display:flex;align-items:center;gap:8px;padding:8px 14px;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:0 4px 20px rgba(0,0,0,.5);transition:border-color .2s,box-shadow .2s;color:rgba(255,255,255,.7);font-size:11px;font-weight:500;letter-spacing:.1em;font-family:var(--font-body)}
+    .lang-pick-btn:hover{border-color:var(--accent-border);box-shadow:0 4px 24px rgba(30,111,217,.3)}
+    .lang-pick-flag{display:flex;align-items:center}
+    .lang-pick-drop{display:none;position:absolute;bottom:calc(100% + 10px);right:0;background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;min-width:160px;z-index:200;box-shadow:0 8px 32px rgba(0,0,0,.5)}
+    .lang-fab.open .lang-pick-drop{display:block}
+    .lang-pick-item{display:flex;align-items:center;gap:10px;padding:11px 16px;font-size:13px;font-weight:400;color:rgba(255,255,255,.65);cursor:pointer;background:none;border:none;width:100%;text-align:left;font-family:var(--font-body);transition:all .2s}
+    .lang-pick-item:hover{color:var(--fg);background:rgba(255,255,255,.05)}
+    .lang-pick-item.active{color:var(--accent)}
+    .lang-pick-item span:first-child{display:flex;align-items:center}
+    .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;background:none;border:none}
+    .hamburger span{display:block;width:22px;height:1.5px;background:var(--fg);transition:all .3s;transform-origin:center}
+    .hamburger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+    .hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+    .hamburger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+    .mobile-nav{display:none;position:fixed;inset:0;background:rgba(5,13,26,.98);z-index:999;flex-direction:column;align-items:center;justify-content:center;gap:36px}
+    .mobile-nav.open{display:flex}
+    .mobile-nav .nav-link{font-size:22px;letter-spacing:.2em}
+    .page{display:block}
+    .page[hidden]{display:none}
+    .hero{position:relative;min-height:50vh;display:flex;align-items:center;background:#050D1A;overflow:hidden}
+    .hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;pointer-events:none}
+    .hero-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(5,13,26,.82) 0%,rgba(10,22,40,.65) 50%,rgba(7,16,32,.78) 100%);z-index:1}
+    .hero>.container{width:100%}
+    .hero-content{position:relative;z-index:1;padding-top:120px;padding-bottom:80px}
+    .hero-badge{margin-bottom:36px}
+    .hero-title{font-family:var(--font-display);font-size:clamp(56px,9vw,104px);font-weight:400;line-height:1.0;letter-spacing:-.02em;display:flex;flex-direction:column;margin-bottom:32px}
+    .hero-title .accent-word{color:var(--accent);font-weight:700}
+    .hero-subtitle{max-width:520px;font-size:15px;font-weight:300;line-height:1.85;color:var(--muted);margin-bottom:40px}
+    .hero-placeholders{display:flex;gap:16px;margin-top:48px}
+    .hero-ph{width:160px;height:160px;flex-shrink:0;border:1px solid rgba(30,111,217,.18);border-radius:4px;overflow:hidden;animation:borderGlow 3s ease-in-out infinite}
+    .hero-ph img{width:100%;height:100%;object-fit:cover;display:block}
+    .hero-ph:nth-child(2){animation-delay:1s}
+    .hero-ph:nth-child(3){animation-delay:2s}
+    .pillars-section{background:var(--surface-alt);padding:100px 0}
+    .pillars-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);margin-top:64px}
+    .pillar-card{background:var(--surface);padding:48px 36px}
+    .pillar-label{font-size:11px;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:20px;display:flex;align-items:center;gap:10px}
+    .pillar-card p{font-size:14px;color:var(--muted);line-height:1.8}
+    .science-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+    .science-subheading{font-size:11px;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+    .science-body{font-size:15px;color:var(--muted);line-height:1.85;margin-bottom:36px}
+    .product-duo-wrap{position:relative;display:flex;justify-content:center;align-items:flex-end;padding:40px 0 60px}
+    .product-glow{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:72%;height:240px;background:radial-gradient(ellipse at center,rgba(30,111,217,.3) 0%,transparent 68%);filter:blur(30px);animation:glowPulse 4s ease-in-out infinite;pointer-events:none;z-index:0}
+    .product-card{position:relative;z-index:1;width:clamp(180px,22vw,300px);transition:transform .55s cubic-bezier(.16,1,.3,1);will-change:transform}
+    .product-card.pc-left{transform:rotate(-5deg) translateX(32px);z-index:2}
+    .product-card.pc-right{transform:rotate(5deg) translateX(-32px)}
+    .product-duo-wrap:hover .product-card.pc-left{transform:rotate(-12deg) translateX(-10px) scale(1.08)}
+    .product-duo-wrap:hover .product-card.pc-right{transform:rotate(12deg) translateX(10px) scale(1.08)}
+    .prod-faixa{display:none;position:absolute;left:-20%;width:140%;height:2px;pointer-events:none;z-index:0}
+    .prod-faixa-a{top:38%;transform:rotate(-6deg);background:linear-gradient(90deg,transparent 0%,rgba(30,111,217,.25) 25%,rgba(59,142,255,.6) 50%,rgba(30,111,217,.25) 75%,transparent 100%);box-shadow:0 0 14px 3px rgba(30,111,217,.2)}
+    .prod-faixa-b{top:58%;transform:rotate(6deg);background:linear-gradient(90deg,transparent 0%,rgba(30,111,217,.18) 25%,rgba(59,142,255,.45) 50%,rgba(30,111,217,.18) 75%,transparent 100%);box-shadow:0 0 10px 2px rgba(30,111,217,.15)}
+    .product-ph{width:clamp(180px,22vw,300px);aspect-ratio:3/4;border-radius:14px;border:1px solid rgba(30,111,217,.2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);background:rgba(30,111,217,.06)}
+    .email-section{background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);text-align:center;padding:80px 40px;position:relative;overflow:hidden}
+    .email-bg-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.12;pointer-events:none;z-index:0}
+    .email-heading{font-family:var(--font-display);font-size:clamp(18px,2.5vw,30px);font-weight:400;letter-spacing:.1em;margin-bottom:36px}
+    .email-form{display:flex;max-width:480px;margin:0 auto;border:1px solid var(--border)}
+    .email-form.error{border-color:rgba(220,38,38,.5)}
+    .email-input{flex:1;background:transparent;border:none;padding:14px 20px;color:var(--fg);font-family:var(--font-body);font-size:13px;font-weight:300;outline:none}
+    .email-input::placeholder{color:var(--muted)}
+    .email-btn{background:var(--accent);border:none;color:#fff;font-family:var(--font-body);font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;padding:14px 28px;cursor:pointer;transition:background .2s;white-space:nowrap}
+    .email-btn:hover{background:var(--accent-bright)}
+    .email-success{display:none;font-size:14px;font-weight:300;color:var(--muted);letter-spacing:.05em;margin-top:16px}
+    .page-hero{padding:160px 0 80px;background:linear-gradient(135deg,#050D1A 0%,#0A1628 60%,#071020 100%);border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+    .page-hero>.container{position:relative;z-index:1;width:100%}
+    .hero-heading{font-family:var(--font-display);font-size:clamp(22px,2.8vw,38px);font-weight:400;line-height:1.3;letter-spacing:-.01em;max-width:780px;margin-bottom:24px}
+    .hero-body{font-size:15px;font-weight:300;line-height:1.85;color:var(--muted);max-width:600px}
+    .page-hero-intro{max-width:640px;font-size:15px;font-weight:300;line-height:1.85;color:var(--muted);margin-top:20px}
+    .page-hero .section-heading{margin-top:8px}
+    .hero-tagline{font-size:15px;font-weight:300;color:var(--muted);margin-top:12px}
+    .mv-section{background:var(--surface-alt);padding:100px 0}
+    .mv-grid{display:grid;grid-template-columns:1fr;gap:48px;max-width:720px}
+    .mv-label{font-size:11px;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:16px;margin-top:40px;display:flex;align-items:center;gap:10px}
+    .mv-label:first-child{margin-top:0}
+    .mv-text{font-size:15px;color:var(--muted);line-height:1.85}
+    .mv-divider{display:block;width:100%;height:1px;background:var(--border);margin:32px 0}
+    .about-visual{width:100%;aspect-ratio:3/4;background:rgba(30,111,217,.05);border:1px solid rgba(30,111,217,.12);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+    .storage-section{padding:100px 0}
+    .storage-rows{margin-top:56px;border-top:1px solid var(--border)}
+    .storage-row{display:grid;grid-template-columns:200px 1fr;gap:40px;align-items:start;padding:36px 0;border-bottom:1px solid var(--border)}
+    .row-label{font-size:11px;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);padding-top:2px;display:flex;align-items:center;gap:10px}
+    .row-body{font-size:15px;color:var(--muted);line-height:1.8}
+    .safety-banner{background:var(--surface);border:1px solid var(--accent-border);padding:60px 40px;text-align:center;margin:0 40px 80px}
+    .banner-text{font-family:var(--font-display);font-size:clamp(16px,2vw,22px);font-weight:400;line-height:1.5;color:var(--muted);max-width:680px;margin:0 auto 32px}
+    .contact-grid{display:grid;grid-template-columns:1fr 1.25fr;gap:80px;align-items:start}
+    .contact-body{font-size:15px;font-weight:300;line-height:1.85;color:var(--muted);margin-bottom:40px}
+    .contact-email-label{font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;display:flex;align-items:center;gap:8px}
+    .contact-email{font-size:15px;font-weight:400;color:var(--fg);display:block;margin-bottom:40px;transition:color .2s}
+    .contact-email:hover{color:var(--accent)}
+    .social-label{font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+    .social-icons{display:flex;gap:16px}
+    .social-icon{width:40px;height:40px;border:1px solid var(--border);border-radius:6px;display:flex;align-items:center;justify-content:center;color:var(--muted);transition:all .2s}
+    .social-icon:hover{border-color:var(--accent-border);color:var(--accent)}
+    .social-icon svg{width:16px;height:16px;fill:currentColor}
+    .contact-form{display:flex;flex-direction:column;gap:0}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:0}
+    .guide-kit-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border)}
+    .guide-dil-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start}
+    .guide-dil-instructions{margin-top:48px;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+    .guide-auth-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);margin-bottom:36px}
+    .guide-cert-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+    .guide-dil-imgs-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+    .form-field{position:relative;border-bottom:1px solid var(--border);border-right:1px solid var(--border)}
+    .form-field:last-child{border-right:none}
+    .form-field-full{position:relative;border-bottom:1px solid var(--border)}
+    .form-field input,.form-field-full input,.form-field-full textarea{width:100%;background:transparent;border:none;padding:20px 20px 8px;color:var(--fg);font-family:var(--font-body);font-size:14px;font-weight:300;outline:none;resize:none}
+    .form-field textarea,.form-field-full textarea{min-height:120px;padding-top:20px}
+    .form-field label,.form-field-full label{position:absolute;top:12px;left:20px;font-size:10px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);pointer-events:none}
+    .form-field input::placeholder,.form-field-full input::placeholder,.form-field-full textarea::placeholder{color:transparent}
+    .form-field input:focus,.form-field-full input:focus,.form-field-full textarea:focus{background:rgba(30,111,217,.03)}
+    .form-border{border:1px solid var(--border);margin-bottom:24px}
+    .form-error{font-size:11px;color:#DC2626;letter-spacing:.05em;margin-top:8px;display:none}
+    .form-error.show{display:block}
+    .form-btn{background:var(--accent);border:none;color:#fff;font-family:var(--font-body);font-size:11px;font-weight:500;letter-spacing:.15em;text-transform:uppercase;padding:16px 36px;cursor:pointer;transition:background .2s;align-self:flex-start}
+    .form-btn:hover{background:var(--accent-bright)}
+    .form-success{display:none;background:rgba(30,111,217,.06);border:1px solid var(--accent-border);padding:40px;text-align:center}
+    .form-success-text{font-size:16px;font-weight:300;color:var(--muted);letter-spacing:.05em}
+    .footer{background:var(--surface-alt);border-top:1px solid var(--border);padding:64px 0 40px}
+    .footer-inner{max-width:var(--max-w);margin:0 auto;padding:0 40px;display:flex;flex-direction:column;gap:40px}
+    .footer-top{display:flex;align-items:flex-start;justify-content:space-between;gap:32px}
+    .footer-logo{height:28px;width:auto;margin-bottom:12px;cursor:pointer}
+    .footer-tagline{font-size:12px;color:var(--muted);letter-spacing:.06em}
+    .footer-nav{display:flex;gap:28px;align-items:center;flex-wrap:wrap}
+    .footer-nav button,.footer-nav a{font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);transition:color .2s;background:none;border:none;font-family:var(--font-body);cursor:pointer}
+    .footer-nav button:hover,.footer-nav a:hover{color:var(--fg)}
+    .footer-copy{font-size:11px;color:rgba(255,255,255,.3);padding-top:32px;border-top:1px solid var(--border)}
+    @media(max-width:1024px){
+      .container{padding:0 32px}.navbar{padding:20px 32px}.pillars-grid{grid-template-columns:1fr}.science-grid{gap:40px}.mv-grid{grid-template-columns:1fr;gap:48px}.storage-row{grid-template-columns:1fr;gap:12px}.contact-grid{grid-template-columns:1fr;gap:56px}.safety-banner{margin:0 32px 64px}.footer-inner{padding:0 32px}.guide-kit-grid{grid-template-columns:repeat(2,1fr)}.guide-dil-instructions{grid-template-columns:1fr}.guide-auth-grid{grid-template-columns:repeat(2,1fr)}.guide-cert-grid{grid-template-columns:repeat(2,1fr)}
+    }
+    @media(max-width:640px){
+      .container{padding:0 20px}.navbar{padding:18px 20px}section{padding:72px 0}.hero{min-height:70vh}.hero-content{padding-top:90px;padding-bottom:48px}.pillars-section{padding:72px 0}#home-science{padding:40px 0}.science-grid{grid-template-columns:1fr;gap:0}.nav-center{display:none}.hamburger{display:flex}.footer-top{flex-direction:column}.footer-nav{gap:18px}.footer-inner{padding:0 20px}.email-form{flex-direction:column}.email-btn{padding:14px}.pillars-grid{gap:1px}.hero-placeholders{gap:10px}.hero-ph{width:clamp(80px,26vw,110px);height:clamp(80px,26vw,110px)}.product-card{width:clamp(120px,38vw,180px)}.product-card.pc-left{transform:rotate(-5deg) translateX(14px);z-index:2}.product-card.pc-right{transform:rotate(5deg) translateX(-14px)}.product-duo-wrap:hover .product-card.pc-left{transform:rotate(-12deg) translateX(-4px) scale(1.08)}.product-duo-wrap:hover .product-card.pc-right{transform:rotate(12deg) translateX(4px) scale(1.08)}.prod-faixa{display:block}.mv-section{padding:72px 0}.page-hero{padding:130px 0 64px}.storage-section{padding:72px 0}.safety-banner{margin:0 20px 64px}.form-row{grid-template-columns:1fr}.form-field{border-right:none}.guide-kit-grid{grid-template-columns:1fr}.guide-dil-grid{grid-template-columns:1fr;gap:32px}.guide-dil-instructions{grid-template-columns:1fr}.guide-auth-grid{grid-template-columns:1fr}.guide-cert-grid{grid-template-columns:1fr 1fr}.guide-dil-imgs-grid{grid-template-columns:1fr}.guide-dil-label-2{display:none}.nav-right{gap:8px}.lang-pick-btn{padding:4px 7px}.hamburger{flex-shrink:0}    }
+  </style>
+</head>
+<body>
+  <nav class="navbar" id="navbar">
+    <img src="mq16q58v-logo.png" alt="THIRZE" class="navbar-logo" data-nav="home">
+    <div class="nav-center">
+      <button class="nav-link" data-nav="safety" data-i18n="nav_safety">SAFETY</button>
+      <button class="nav-link" data-nav="contact" data-i18n="nav_contact">CONTACT</button>
+      <button class="nav-link" data-nav="about" data-i18n="nav_about">ABOUT</button>
+      <button class="nav-link" data-nav="guide" data-i18n="nav_guide">GUIDE</button>
+    </div>
+    <div class="nav-right">
+      <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <div class="lang-fab" id="langPicker">
+    <button class="lang-pick-btn" id="langPickBtn" aria-label="Select language">
+      <span class="lang-pick-flag" id="langPickFlag"><svg width="24" height="18" viewBox="0 0 24 18" xmlns="http://www.w3.org/2000/svg" style="border-radius:2px;display:block"><rect width="24" height="18" fill="#B22234"/><rect y="1.38" width="24" height="1.38" fill="#fff"/><rect y="4.15" width="24" height="1.38" fill="#fff"/><rect y="6.92" width="24" height="1.38" fill="#fff"/><rect y="9.69" width="24" height="1.38" fill="#fff"/><rect y="12.46" width="24" height="1.38" fill="#fff"/><rect y="15.23" width="24" height="1.38" fill="#fff"/><rect width="10" height="9.69" fill="#3C3B6E"/></svg></span>
+    </button>
+    <div class="lang-pick-drop" id="langPickDrop">
+      <button class="lang-pick-item active" data-lang="en"><span><svg width="22" height="16" viewBox="0 0 22 16" xmlns="http://www.w3.org/2000/svg" style="border-radius:2px;display:block"><rect width="22" height="16" fill="#B22234"/><rect y="1.23" width="22" height="1.23" fill="#fff"/><rect y="3.69" width="22" height="1.23" fill="#fff"/><rect y="6.15" width="22" height="1.23" fill="#fff"/><rect y="8.62" width="22" height="1.23" fill="#fff"/><rect y="11.08" width="22" height="1.23" fill="#fff"/><rect y="13.54" width="22" height="1.23" fill="#fff"/><rect width="9" height="8.62" fill="#3C3B6E"/></svg></span><span>English</span></button>
+      <button class="lang-pick-item" data-lang="pt"><span><svg width="22" height="16" viewBox="0 0 22 16" xmlns="http://www.w3.org/2000/svg" style="border-radius:2px;display:block"><rect width="22" height="16" fill="#009c3b"/><polygon points="11,2 21,8 11,14 1,8" fill="#FFDF00"/><circle cx="11" cy="8" r="3.2" fill="#002776"/><rect x="7.5" y="7.4" width="7" height="1.2" fill="#fff" rx="0.6"/></svg></span><span>Português</span></button>
+      <button class="lang-pick-item" data-lang="es"><span><svg width="22" height="16" viewBox="0 0 22 16" xmlns="http://www.w3.org/2000/svg" style="border-radius:2px;display:block"><rect width="22" height="16" fill="#c60b1e"/><rect y="4" width="22" height="8" fill="#ffc400"/></svg></span><span>Español</span></button>
+      <button class="lang-pick-item" data-lang="de"><span><svg width="22" height="16" viewBox="0 0 22 16" xmlns="http://www.w3.org/2000/svg" style="border-radius:2px;display:block"><rect width="22" height="16" fill="#000"/><rect y="5.33" width="22" height="5.34" fill="#D00"/><rect y="10.67" width="22" height="5.33" fill="#FFCE00"/></svg></span><span>Deutsch</span></button>
+    </div>
+  </div>
+  <div class="mobile-nav" id="mobileNav">
+    <button class="nav-link" data-nav="safety" data-i18n="nav_safety">SAFETY</button>
+    <button class="nav-link" data-nav="contact" data-i18n="nav_contact">CONTACT</button>
+    <button class="nav-link" data-nav="about" data-i18n="nav_about">ABOUT</button>
+    <button class="nav-link" data-nav="guide" data-i18n="nav_guide">GUIDE</button>
+  </div>
+
+  <div id="page-home" class="page">
+    <section class="hero">
+      <video class="hero-video" autoplay muted loop playsinline>
+        <source src="mq1f8sjp-0_Dna_Science_1920x1080.mp4" type="video/mp4">
+      </video>
+      <div class="hero-overlay"></div>
+      <div class="container" style="position:relative;z-index:2">
+        <div class="hero-content fade-up">
+          <div class="hero-badge"><span class="badge-pill" data-i18n="hero_badge">A Zenthera Biopharma Brand</span></div>
+          <h1 class="hero-title">
+            <span data-i18n="hero_line1">Science.</span>
+            <span data-i18n="hero_line2">Performance.</span>
+            <span class="accent-word" data-i18n="hero_line3">Purity.</span>
+          </h1>
+          <p class="hero-subtitle" data-i18n="hero_subtitle">THIRZE© Tirzepatide is developed for qualified medical and professional environments, with precision, integrity and pharmaceutical discipline.</p>
+          <a href="#home-science" class="cta-link" data-i18n="hero_cta">EXPLORE THE SCIENCE →</a>
+          <div class="hero-placeholders">
+            <div class="hero-ph"><img src="mq1l1bsw-tirzepatida.jpeg" alt="Tirzepatida"></div>
+            <div class="hero-ph"><img src="mq1l1bsa-cartão.jpeg" alt="Cartão"></div>
+            <div class="hero-ph"><img src="mq1l1bso-embalagem.jpeg" alt="Embalagem"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="pillars-section">
+      <div class="container">
+        <div class="fade-up">
+          <span class="eyebrow" data-i18n="pillars_eyebrow">Our Foundation</span>
+          <span class="eyebrow-line"></span>
+          <h2 class="section-heading"><span data-i18n="pillars_heading">Built on science. Driven by integrity.</span></h2>
+        </div>
+        <div class="pillars-grid fade-up" style="transition-delay:.15s">
+          <div class="pillar-card">
+            <p class="pillar-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1E6FD9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5"/></svg><span data-i18n="pillar1_label">MOLECULAR PRECISION</span></p>
+            <p data-i18n="pillar1_body">Advanced peptide engineering designed to support structural consistency, formulation integrity and controlled quality.</p>
+          </div>
+          <div class="pillar-card">
+            <p class="pillar-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1E6FD9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span data-i18n="pillar2_label">RIGOROUS QUALITY</span></p>
+            <p data-i18n="pillar2_body">Produced under controlled pharmaceutical standards to support purity, potency and consistent batch integrity.</p>
+          </div>
+          <div class="pillar-card">
+            <p class="pillar-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1E6FD9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span data-i18n="pillar3_label">PROFESSIONAL APPLICATION</span></p>
+            <p data-i18n="pillar3_body">Developed for qualified healthcare professionals, with use guided by clinical evaluation, precision and professional oversight.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="home-science">
+      <div class="container">
+        <div class="science-grid">
+          <div class="fade-up">
+            <span class="eyebrow" data-i18n="science_eyebrow">The Science</span>
+            <span class="eyebrow-line"></span>
+            <h2 class="section-heading" style="margin-bottom:28px"><span data-i18n="science_heading">Built on science. Refined through discipline.</span></h2>
+            <p class="science-subheading" data-i18n="science_subheading">THE SCIENCE OF TIRZEPATIDE</p>
+            <p class="science-body" data-i18n="science_body">Tirzepatide acts through dual GIP and GLP-1 receptor activity, engaging key pathways involved in metabolic regulation. Its profile represents a new generation of metabolic science, where clinical relevance begins at the receptor level.</p>
+            <button class="cta-link" data-nav="safety" data-i18n="science_cta">LEARN MORE →</button>
+          </div>
+          <div class="product-duo-wrap fade-up" style="transition-delay:.1s">
+            <div class="product-glow"></div>
+            <div class="prod-faixa prod-faixa-a"></div>
+            <div class="prod-faixa prod-faixa-b"></div>
+            <div class="product-card pc-left"><img src="mq1t3t9q-1_.png" alt="Thirze Product 1" style="width:100%;border-radius:14px;display:block"></div>
+            <div class="product-card pc-right"><img src="mq1t3t8y-2.png" alt="Thirze Product 2" style="width:100%;border-radius:14px;display:block"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="email-section" id="emailSection">
+      <video class="email-bg-video" autoplay muted loop playsinline>
+        <source src="mq1th1p9-0_Dna_Helix_1920x1080.mp4" type="video/mp4">
+      </video>
+      <div class="fade-up" style="position:relative;z-index:1">
+        <h2 class="email-heading" data-i18n="email_heading">RECEIVE UPDATES ON THIRZE</h2>
+        <div class="email-form" id="emailForm">
+          <input type="email" class="email-input" id="emailInput" data-i18n-placeholder="email_placeholder" placeholder="Your email address">
+          <button class="email-btn" id="emailBtn" data-i18n="email_btn">SIGN UP</button>
+        </div>
+        <p class="email-success" id="emailSuccess" data-i18n="email_success">Thanks for connecting with THIRZE.</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="page-about" class="page" hidden>
+    <div class="page-hero">
+      <div class="container fade-up">
+        <span class="eyebrow" data-i18n="about_eyebrow">About</span>
+        <span class="eyebrow-line"></span>
+        <h1 class="hero-heading" data-i18n="about_heading">THIRZE© is a refined tirzepatide presentation developed within the Zenthera Biopharma ecosystem for qualified medical and professional environments.</h1>
+        <p class="hero-body" data-i18n="about_body">Guided by science and pharmaceutical discipline, with focus on product integrity, controlled standards and authenticity-focused verification.</p>
+      </div>
+    </div>
+    <section class="mv-section">
+      <div class="container">
+        <div class="mv-grid">
+          <div class="fade-up">
+            <p class="mv-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1E6FD9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/></svg><span data-i18n="mission_label">MISSION</span></p>
+            <p class="mv-text" data-i18n="mission_text">To present THIRZE© Tirzepatide with clarity, scientific responsibility and pharmaceutical discipline — supporting qualified medical and professional environments centered on trust, consistency, authenticity and controlled standards.</p>
+            <span class="mv-divider"></span>
+            <p class="mv-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1E6FD9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><span data-i18n="vision_label">VISION</span></p>
+            <p class="mv-text" data-i18n="vision_text">To become a trusted reference in advanced tirzepatide presentation, recognized for scientific clarity, pharmaceutical discipline and authenticity-focused standards — representing a new level of confidence, consistency and sophistication within qualified medical and professional environments.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div id="page-safety" class="page" hidden>
+    <div class="page-hero">
+      <div class="container fade-up">
+        <span class="eyebrow" data-i18n="safety_eyebrow">Safety &amp; Storage</span>
+        <span class="eyebrow-line"></span>
+        <h1 class="section-heading"><svg class="sh-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1E6FD9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span data-i18n="safety_heading">Safety &amp; Storage</span></h1>
+        <p class="page-hero-intro" data-i18n="safety_intro">Guidelines for the safe handling, storage, and use of THIRZE© Tirzepatide.</p>
+      </div>
+    </div>
+    <section class="storage-section">
+      <div class="container">
+        <div class="fade-up">
+          <span class="eyebrow" data-i18n="storage_eyebrow">Storage Guidelines</span>
+          <span class="eyebrow-line"></span>
+        </div>
+        <div class="storage-rows">
+          <div class="storage-row fade-up">
+            <p class="row-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1E6FD9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M14 2v6l4 9H6l4-9V2"/><line x1="6" y1="2" x2="18" y2="2"/></svg><span data-i18n="row1_label">PRESENTATION</span></p>
+            <p class="row-body" data-i18n="row1_body">Lyophilized presentation with bacteriostatic water supports secure transport and practical storage before dilution.</p>
+          </div>
+          <div class="storage-row fade-up" style="transition-delay:.08s">
+            <p class="row-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1E6FD9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/></svg><span data-i18n="row2_label">BEFORE DILUTION</span></p>
+            <p class="row-body" data-i18n="row2_body">Maintain under controlled storage conditions, protected from heat, moisture and direct light until professional preparation.</p>
+          </div>
+          <div class="storage-row fade-up" style="transition-delay:.16s">
+            <p class="row-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1E6FD9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><line x1="12" y1="2" x2="12" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><polyline points="4.93 4.93 12 12 19.07 4.93"/><polyline points="4.93 19.07 12 12 19.07 19.07"/></svg><span data-i18n="row3_label">AFTER DILUTION</span></p>
+            <p class="row-body" data-i18n="row3_body">THIRZE© should be refrigerated and removed only briefly for measured dosing and professional application, then returned to refrigeration.</p>
+          </div>
+          <div class="storage-row fade-up" style="transition-delay:.24s">
+            <p class="row-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1E6FD9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><line x1="12" y1="11" x2="12" y2="17"/><line x1="9" y1="14" x2="15" y2="14"/></svg><span data-i18n="row4_label">PROFESSIONAL HANDLING</span></p>
+            <p class="row-body" data-i18n="row4_body">For qualified medical environments, with handling, preparation and use guided by professional standards and applicable protocols.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="safety-banner fade-up">
+      <p class="banner-text" data-i18n="banner_text">For professional medical environments only. Product authenticity, documentation, and safety guidance are our priority.</p>
+      <button class="cta-link" data-nav="contact" data-i18n="banner_cta">CONTACT US →</button>
+    </div>
+  </div>
+
+  <div id="page-contact" class="page" hidden>
+    <div class="page-hero">
+      <div class="container fade-up">
+        <span class="eyebrow" data-i18n="contact_eyebrow">Contact</span>
+        <span class="eyebrow-line"></span>
+        <h1 class="section-heading"><svg class="sh-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1E6FD9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg><span data-i18n="contact_heading">CONTACT THIRZE©</span></h1>
+        <p class="hero-tagline" data-i18n="contact_tagline">We're here to help.</p>
+      </div>
+    </div>
+    <section>
+      <div class="container">
+        <div class="contact-grid">
+          <div class="fade-up">
+            <p class="contact-body" data-i18n="contact_body">For professional inquiries, partnerships, or additional information, our team is available to assist with clarity and discretion.</p>
+            <p class="contact-email-label"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1E6FD9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg><span data-i18n="contact_email_label">Email</span></p>
+            <a href="mailto:support@thirze.com" class="contact-email">support@thirze.com</a>
+            <p class="social-label"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.45)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg><span data-i18n="contact_social_label">Coming soon to social media</span></p>
+            <div class="social-icons">
+              <a href="#" class="social-icon" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+              <a href="#" class="social-icon" aria-label="Twitter"><svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg></a>
+              <a href="#" class="social-icon" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+              <a href="#" class="social-icon" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" fill="none" stroke="currentColor" stroke-width="1.5"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></a>
+            </div>
+          </div>
+          <div class="fade-up" style="transition-delay:.15s">
+            <div id="formWrap">
+              <div class="form-border">
+                <div class="contact-form" id="contactForm">
+                  <div class="form-row">
+                    <div class="form-field"><label data-i18n="form_firstname">First Name</label><input type="text" id="f_firstname" autocomplete="given-name"></div>
+                    <div class="form-field" style="border-right:none"><label data-i18n="form_lastname">Last Name</label><input type="text" id="f_lastname" autocomplete="family-name"></div>
+                  </div>
+                  <div class="form-field-full"><label data-i18n="form_email">Email</label><input type="email" id="f_email" autocomplete="email"></div>
+                  <div class="form-field-full"><label data-i18n="form_occupation">Occupation</label><input type="text" id="f_occupation"></div>
+                  <div class="form-field-full" style="border-bottom:none"><label data-i18n="form_message">Message</label><textarea id="f_message" rows="5"></textarea></div>
+                </div>
+              </div>
+              <p class="form-error" id="formError" data-i18n="form_error">Please fill in all fields with a valid email.</p>
+              <button class="form-btn" id="formBtn" data-i18n="form_btn">SEND MESSAGE</button>
+            </div>
+            <div class="form-success" id="formSuccess"><p class="form-success-text" data-i18n="form_success" id="formSuccessText">Thanks for submitting!</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ── PAGE: GUIDE ─────────────────────────────────────────────────── -->
+  <div id="page-guide" class="page" hidden>
+    <section style="padding:140px 0 80px;background:linear-gradient(135deg,#050D1A 0%,#0A1628 60%,#071020 100%);position:relative;overflow:hidden">
+      <video autoplay muted loop playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.18;z-index:0;pointer-events:none"><source src="mq1tc3w2-grok-video-11e65d30-a7dd-42f4-a4eb-e088c25d5070.mp4" type="video/mp4"></video>
+      <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(5,13,26,.75) 0%,rgba(10,22,40,.55) 60%,rgba(7,16,32,.75) 100%);z-index:1;pointer-events:none"></div>
+      <div class="container" style="position:relative;z-index:2">
+        <div class="fade-up">
+          <h1 style="font-family:var(--font-display);font-size:clamp(48px,7vw,96px);font-weight:400;line-height:1.0;letter-spacing:-.02em;white-space:pre-line;margin-bottom:24px" data-i18n="guide_heading">Institutional&#10;Manual&#10;Kit Thirze</h1>
+          <p style="font-size:18px;font-weight:300;color:var(--muted);margin-bottom:16px" data-i18n="guide_sub">Tirzepatide 60 mg</p>
+          <span class="badge-pill" data-i18n="guide_rx">⚠ For sale by prescription only</span>
+        </div>
+      </div>
+    </section>
+
+    <section style="background:var(--surface-alt)">
+      <div class="container">
+        <div class="fade-up" style="margin-bottom:48px">
+          <span class="eyebrow" data-i18n="guide_kit_eyebrow">Kit Contents</span>
+          <span class="eyebrow-line"></span>
+
+        </div>
+        <div class="fade-up guide-kit-grid">
+          <div style="background:var(--surface);overflow:hidden">
+            <img src="mq1azjy1-tirzepatida.jpeg" alt="THIRZE® Vial" style="width:100%;aspect-ratio:1/1;object-fit:cover;display:block">
+            <div style="padding:24px 28px">
+              <p style="font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:8px" data-i18n="guide_kit_item1">THIRZE® Vial</p>
+              <p style="font-size:13px;color:var(--muted)" data-i18n="guide_kit_item1_sub">Tirzepatide 60mg</p>
+            </div>
+          </div>
+          <div style="background:var(--surface);overflow:hidden">
+            <img src="mq1azjx1-bacteriostatic.jpeg" alt="Bacteriostatic Water" style="width:100%;aspect-ratio:1/1;object-fit:cover;display:block">
+            <div style="padding:24px 28px">
+              <p style="font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:8px" data-i18n="guide_kit_item2">Bacteriostatic Water</p>
+              <p style="font-size:13px;color:var(--muted)" data-i18n="guide_kit_item2_sub">4mL</p>
+            </div>
+          </div>
+          <div style="background:var(--surface);overflow:hidden">
+            <img src="mq1azjxc-cartão.jpeg" alt="Authentication Card" style="width:100%;aspect-ratio:1/1;object-fit:cover;display:block">
+            <div style="padding:24px 28px">
+              <p style="font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:8px" data-i18n="guide_kit_item3">Authentication Card</p>
+              <p style="font-size:13px;color:var(--muted)" data-i18n="guide_kit_item3_sub">Official verification</p>
+            </div>
+          </div>
+          <div style="background:var(--surface);overflow:hidden">
+            <img src="mq1azjxo-embalagem.jpeg" alt="Premium Packaging" style="width:100%;aspect-ratio:1/1;object-fit:cover;display:block">
+            <div style="padding:24px 28px">
+              <p style="font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:8px" data-i18n="guide_kit_item4">Premium Packaging</p>
+              <p style="font-size:13px;color:var(--muted)" data-i18n="guide_kit_item4_sub">Institutional presentation</p>
+            </div>
+          </div>
+          <div style="background:var(--surface);overflow:hidden">
+            <img src="mq1azjxz-material.jpeg" alt="Digital Material" style="width:100%;aspect-ratio:1/1;object-fit:cover;display:block">
+            <div style="padding:24px 28px">
+              <p style="font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:8px" data-i18n="guide_kit_item5">Digital Material</p>
+              <p style="font-size:13px;color:var(--muted)" data-i18n="guide_kit_item5_sub">Institutional documentation</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="fade-up" style="margin-bottom:48px">
+          <span class="eyebrow" data-i18n="guide_dilguide_eyebrow">Dilution Guide</span>
+          <span class="eyebrow-line"></span>
+        </div>
+        <div class="fade-up guide-dil-imgs-grid">
+          <img
+            data-lang-img='{"en":"mq1e31b1-1.png","pt":"mq1e31gm-1-BR.png","es":"mq1e3197-1-espanhol.png","de":"mq1e31ex-1-Alemao.png"}'
+            src="mq1e31b1-1.png"
+            alt="Dilution Guide 1"
+            style="width:100%;border-radius:8px;border:1px solid var(--accent-border);display:block">
+          <img
+            data-lang-img='{"en":"mq1e31ec-2.png","pt":"mq1e31cu-2-BR.png","es":"mq1e31dp-2-espanhol.png","de":"mq1e31bz-2-alemao.png"}'
+            src="mq1e31ec-2.png"
+            alt="Dilution Guide 2"
+            style="width:100%;border-radius:8px;border:1px solid var(--accent-border);display:block">
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="fade-up guide-dil-grid">
+          <div>
+            <p style="font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:16px" data-i18n="guide_dil_col2">Seringa Insulina U-100</p>
+            <table style="width:100%;border-collapse:collapse;font-size:13px;table-layout:fixed;border:1px solid var(--accent-border);border-radius:8px;overflow:hidden">
+              <colgroup><col style="width:50%"><col style="width:50%"></colgroup>
+              <thead>
+                <tr style="border-bottom:2px solid var(--border)">
+                  <th style="padding:10px 16px;text-align:left;font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)" data-i18n="guide_dil_col1">Dose</th>
+                  <th style="padding:10px 16px;text-align:right;font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)" data-i18n="guide_dil_col3">UI na Seringa</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 16px;color:var(--fg);font-variant-numeric:tabular-nums">2,5 mg</td><td style="padding:10px 16px;text-align:right;color:var(--muted);font-variant-numeric:tabular-nums">13 UI</td></tr>
+                <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 16px;color:var(--fg);font-variant-numeric:tabular-nums">3,0 mg</td><td style="padding:10px 16px;text-align:right;color:var(--muted);font-variant-numeric:tabular-nums">15 UI</td></tr>
+                <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 16px;color:var(--fg);font-variant-numeric:tabular-nums">3,5 mg</td><td style="padding:10px 16px;text-align:right;color:var(--muted);font-variant-numeric:tabular-nums">18 UI</td></tr>
+                <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 16px;color:var(--fg);font-variant-numeric:tabular-nums">4,0 mg</td><td style="padding:10px 16px;text-align:right;color:var(--muted);font-variant-numeric:tabular-nums">20 UI</td></tr>
+                <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 16px;color:var(--fg);font-variant-numeric:tabular-nums">4,5 mg</td><td style="padding:10px 16px;text-align:right;color:var(--muted);font-variant-numeric:tabular-nums">23 UI</td></tr>
+                <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 16px;color:var(--fg);font-variant-numeric:tabular-nums">5,0 mg</td><td style="padding:10px 16px;text-align:right;color:var(--muted);font-variant-numeric:tabular-nums">25 UI</td></tr>
+                <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 16px;color:var(--fg);font-variant-numeric:tabular-nums">5,5 mg</td><td style="padding:10px 16px;text-align:right;color:var(--muted);font-variant-numeric:tabular-nums">28 UI</td></tr>
+                <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 16px;color:var(--fg);font-variant-numeric:tabular-nums">6,0 mg</td><td style="padding:10px 16px;text-align:right;color:var(--muted);font-variant-numeric:tabular-nums">30 UI</td></tr>
+                <tr><td style="padding:10px 16px;color:var(--fg);font-variant-numeric:tabular-nums">6,5 mg</td><td style="padding:10px 16px;text-align:right;color:var(--muted);font-variant-numeric:tabular-nums">33 UI</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div>
+            <p class="guide-dil-label-2" style="font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:16px" data-i18n="guide_dil_col2">Seringa Insulina U-100</p>
+            <table style="width:100%;border-collapse:collapse;font-size:13px;table-layout:fixed;border:1px solid var(--accent-border);border-radius:8px;overflow:hidden">
+              <colgroup><col style="width:50%"><col style="width:50%"></colgroup>
+              <thead>
+                <tr style="border-bottom:2px solid var(--border)">
+                  <th style="padding:10px 16px;text-align:left;font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)" data-i18n="guide_dil_col1">Dose</th>
+                  <th style="padding:10px 16px;text-align:right;font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)" data-i18n="guide_dil_col3">UI na Seringa</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 16px;color:var(--fg);font-variant-numeric:tabular-nums">7,0 mg</td><td style="padding:10px 16px;text-align:right;color:var(--muted);font-variant-numeric:tabular-nums">35 UI</td></tr>
+                <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 16px;color:var(--fg);font-variant-numeric:tabular-nums">7,5 mg</td><td style="padding:10px 16px;text-align:right;color:var(--muted);font-variant-numeric:tabular-nums">38 UI</td></tr>
+                <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 16px;color:var(--fg);font-variant-numeric:tabular-nums">8,0 mg</td><td style="padding:10px 16px;text-align:right;color:var(--muted);font-variant-numeric:tabular-nums">40 UI</td></tr>
+                <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 16px;color:var(--fg);font-variant-numeric:tabular-nums">8,5 mg</td><td style="padding:10px 16px;text-align:right;color:var(--muted);font-variant-numeric:tabular-nums">43 UI</td></tr>
+                <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 16px;color:var(--fg);font-variant-numeric:tabular-nums">9,0 mg</td><td style="padding:10px 16px;text-align:right;color:var(--muted);font-variant-numeric:tabular-nums">45 UI</td></tr>
+                <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 16px;color:var(--fg);font-variant-numeric:tabular-nums">9,5 mg</td><td style="padding:10px 16px;text-align:right;color:var(--muted);font-variant-numeric:tabular-nums">48 UI</td></tr>
+                <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 16px;color:var(--fg);font-variant-numeric:tabular-nums">10,0 mg</td><td style="padding:10px 16px;text-align:right;color:var(--muted);font-variant-numeric:tabular-nums">50 UI</td></tr>
+                <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 16px;color:var(--fg);font-variant-numeric:tabular-nums">12,5 mg</td><td style="padding:10px 16px;text-align:right;color:var(--muted);font-variant-numeric:tabular-nums">60 UI</td></tr>
+                <tr><td style="padding:10px 16px;color:var(--fg);font-variant-numeric:tabular-nums">15,0 mg</td><td style="padding:10px 16px;text-align:right;color:var(--muted);font-variant-numeric:tabular-nums">75 UI</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="fade-up guide-dil-instructions">
+          <div>
+            <h3 style="font-size:13px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:20px" data-i18n="guide_instr_heading">Instruções Gerais</h3>
+            <ul style="list-style:none;display:flex;flex-direction:column;gap:12px;margin-bottom:36px">
+              <li style="font-size:14px;color:var(--muted);padding-left:16px;border-left:2px solid var(--accent)" data-i18n="guide_instr1">Reconstituir o frasco de 60mg com 3mL de água bacteriostática (BAC Water)</li>
+              <li style="font-size:14px;color:var(--muted);padding-left:16px;border-left:2px solid var(--accent)" data-i18n="guide_instr2">Concentração final: 60mg/mL</li>
+              <li style="font-size:14px;color:var(--muted);padding-left:16px;border-left:2px solid var(--accent)" data-i18n="guide_instr3">Aplicação subcutânea</li>
+              <li style="font-size:14px;color:var(--muted);padding-left:16px;border-left:2px solid var(--accent)" data-i18n="guide_instr4">Usar seringa de insulina (1mL) para precisão</li>
+              <li style="font-size:14px;color:var(--muted);padding-left:16px;border-left:2px solid var(--accent)" data-i18n="guide_instr5">Rotacionar locais: abdômen, coxa, braço</li>
+            </ul>
+          </div>
+          <div>
+            <h3 style="font-size:13px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:20px" data-i18n="guide_yield_heading">Nota Importante</h3>
+            <div style="background:rgba(30,111,217,.10);border:1px solid rgba(30,111,217,.28);border-radius:10px;padding:24px 28px;display:flex;flex-direction:column;gap:0;margin-bottom:28px;overflow:hidden">
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid rgba(30,111,217,.18)">
+                <span style="font-size:13px;font-weight:500;color:rgba(255,255,255,.7)" data-i18n="guide_yield1_label">~24 doses</span>
+                <span style="font-size:13px;color:var(--accent-bright,#3B8EFF);font-weight:600;letter-spacing:.04em" data-i18n="guide_yield1_dose">2,5 mg</span>
+              </div>
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 0">
+                <span style="font-size:13px;font-weight:500;color:rgba(255,255,255,.7)" data-i18n="guide_yield2_label">~12 doses</span>
+                <span style="font-size:13px;color:var(--accent-bright,#3B8EFF);font-weight:600;letter-spacing:.04em" data-i18n="guide_yield2_dose">5,0 mg</span>
+              </div>
+            </div>
+            <span style="font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);opacity:.8" data-i18n="guide_yield3">GMP/ISO certified product</span>
+            <p style="font-size:12px;color:rgba(255,255,255,.35);margin-top:20px;line-height:1.8;border-top:1px solid var(--border);padding-top:20px" data-i18n="guide_dil_warning">Uso exclusivo para ambientes médicos qualificados.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section style="background:var(--surface-alt)">
+      <div class="container">
+        <div class="fade-up" style="margin-bottom:48px">
+          <span class="eyebrow" data-i18n="guide_auth_eyebrow">Authenticity & Traceability</span>
+          <span class="eyebrow-line"></span>
+          <h2 class="section-heading" data-i18n="guide_auth_heading">Authenticity & Traceability</h2>
+        </div>
+        <div class="fade-up guide-auth-grid">
+          <div style="background:var(--surface);padding:36px 24px">
+            <div style="font-family:var(--font-display);font-size:48px;font-weight:400;color:rgba(30,111,217,.2);line-height:1;margin-bottom:16px">01</div>
+            <p style="font-size:12px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:10px" data-i18n="guide_step1_label">Locate the Code</p>
+            <p style="font-size:13px;color:var(--muted);line-height:1.75" data-i18n="guide_step1_body">Find the authentication code on the card inside the packaging.</p>
+          </div>
+          <div style="background:var(--surface);padding:36px 24px">
+            <div style="font-family:var(--font-display);font-size:48px;font-weight:400;color:rgba(30,111,217,.2);line-height:1;margin-bottom:16px">02</div>
+            <p style="font-size:12px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:10px" data-i18n="guide_step2_label">Access the System</p>
+            <p style="font-size:13px;color:var(--muted);line-height:1.75" data-i18n="guide_step2_body">Visit the official verification system at www.thirze.com.</p>
+          </div>
+          <div style="background:var(--surface);padding:36px 24px">
+            <div style="font-family:var(--font-display);font-size:48px;font-weight:400;color:rgba(30,111,217,.2);line-height:1;margin-bottom:16px">03</div>
+            <p style="font-size:12px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:10px" data-i18n="guide_step3_label">Enter the Code</p>
+            <p style="font-size:13px;color:var(--muted);line-height:1.75" data-i18n="guide_step3_body">Enter the code to validate against the ZENTHERA BIOPHARMA database.</p>
+          </div>
+          <div style="background:var(--surface);padding:36px 24px">
+            <div style="font-family:var(--font-display);font-size:48px;font-weight:400;color:rgba(30,111,217,.2);line-height:1;margin-bottom:16px">04</div>
+            <p style="font-size:12px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:10px" data-i18n="guide_step4_label">Confirm Details</p>
+            <p style="font-size:13px;color:var(--muted);line-height:1.75" data-i18n="guide_step4_body">Confirm batch number, expiration date, and traceability information.</p>
+          </div>
+        </div>
+        <p style="font-size:13px;color:rgba(255,255,255,.35);text-align:center" data-i18n="guide_auth_notice">Notice: If any discrepancy is identified, discontinue use and contact official support immediately.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="fade-up" style="margin-bottom:48px">
+          <span class="eyebrow" data-i18n="guide_certs_eyebrow">Certifications & Standards</span>
+          <span class="eyebrow-line"></span>
+        </div>
+        <div class="fade-up guide-cert-grid">
+          <div style="border:1px solid var(--border);padding:32px 24px;text-align:center">
+            <div style="display:flex;justify-content:center;margin-bottom:16px">
+              <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <rect x="4" y="14" width="28" height="18" rx="2" stroke="#1E6FD9" stroke-width="1.5"/>
+                <path d="M12 14V10a6 6 0 0 1 12 0v4" stroke="#1E6FD9" stroke-width="1.5" stroke-linecap="round"/>
+                <circle cx="18" cy="21" r="3" stroke="#1E6FD9" stroke-width="1.5"/>
+                <line x1="18" y1="24" x2="18" y2="27" stroke="#1E6FD9" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M8 14V8h4" stroke="#1E6FD9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity=".4"/>
+              </svg>
+            </div>
+            <p style="font-size:13px;font-weight:500;color:var(--fg);margin-bottom:6px" data-i18n="guide_cert1_label">GMP Certified</p>
+            <p style="font-size:12px;color:var(--muted)" data-i18n="guide_cert1_body">Good Manufacturing Practice</p>
+          </div>
+          <div style="border:1px solid var(--border);padding:32px 24px;text-align:center">
+            <div style="display:flex;justify-content:center;margin-bottom:16px">
+              <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M18 4L6 9v10c0 7 5 12 12 14 7-2 12-7 12-14V9L18 4z" stroke="#1E6FD9" stroke-width="1.5" stroke-linejoin="round"/>
+                <path d="M13 18l3.5 3.5L23 15" stroke="#1E6FD9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <p style="font-size:13px;font-weight:500;color:var(--fg);margin-bottom:6px" data-i18n="guide_cert2_label">OHSAS</p>
+            <p style="font-size:12px;color:var(--muted)" data-i18n="guide_cert2_body">Occupational Health & Safety</p>
+          </div>
+          <div style="border:1px solid var(--border);padding:32px 24px;text-align:center">
+            <div style="display:flex;justify-content:center;margin-bottom:16px">
+              <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <circle cx="18" cy="18" r="13" stroke="#1E6FD9" stroke-width="1.5"/>
+                <path d="M13 18l3.5 3.5L23 13" stroke="#1E6FD9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="18" cy="18" r="9" stroke="#1E6FD9" stroke-width="1" opacity=".3"/>
+              </svg>
+            </div>
+            <p style="font-size:13px;font-weight:500;color:var(--fg);margin-bottom:6px" data-i18n="guide_cert3_label">ISO 9001</p>
+            <p style="font-size:12px;color:var(--muted)" data-i18n="guide_cert3_body">Quality Management System</p>
+          </div>
+          <div style="border:1px solid var(--border);padding:32px 24px;text-align:center">
+            <div style="display:flex;justify-content:center;margin-bottom:16px">
+              <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <rect x="4" y="10" width="28" height="16" rx="2" stroke="#1E6FD9" stroke-width="1.5"/>
+                <rect x="4" y="10" width="28" height="5" rx="1" fill="#1E6FD9" opacity=".15"/>
+                <line x1="4" y1="21" x2="32" y2="21" stroke="#1E6FD9" stroke-width="1" opacity=".3"/>
+                <path d="M4 15h28" stroke="#1E6FD9" stroke-width="1" opacity=".3"/>
+                <circle cx="18" cy="30" r="2" fill="#1E6FD9" opacity=".5"/>
+                <line x1="18" y1="26" x2="18" y2="28" stroke="#1E6FD9" stroke-width="1.5" stroke-linecap="round" opacity=".5"/>
+              </svg>
+            </div>
+            <p style="font-size:13px;font-weight:500;color:var(--fg);margin-bottom:6px" data-i18n="guide_cert4_label">Made in Germany</p>
+            <p style="font-size:12px;color:var(--muted)" data-i18n="guide_cert4_body">Manufactured in Germany</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section style="background:var(--surface-alt)">
+      <div class="container">
+        <div class="fade-up" style="max-width:680px;margin:0 auto;text-align:center">
+          <span class="eyebrow" style="display:block;text-align:center" data-i18n="guide_support_eyebrow">Official Support</span>
+          <span class="eyebrow-line" style="margin:10px auto 28px"></span>
+          <h2 style="font-family:var(--font-display);font-size:clamp(24px,3vw,40px);font-weight:400;margin-bottom:20px" data-i18n="guide_support_heading">ZENTHERA BIOPHARMA</h2>
+          <p style="font-size:15px;color:var(--muted);line-height:1.85;margin-bottom:36px" data-i18n="guide_support_body">For technical inquiries, healthcare professional support, or authenticity verification, reach us through the official channels below.</p>
+          <div style="display:flex;flex-direction:column;gap:12px;align-items:center;margin-bottom:40px">
+            <div style="display:flex;gap:16px;align-items:center">
+              <span style="font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)" data-i18n="guide_support_email_label">Email</span>
+              <span style="color:var(--accent);font-size:14px">support@thirze.com</span>
+            </div>
+            <div style="display:flex;gap:16px;align-items:center">
+              <span style="font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)" data-i18n="guide_support_web_label">Website</span>
+              <span style="color:var(--accent);font-size:14px">www.thirze.com</span>
+            </div>
+          </div>
+          <p style="font-size:11px;color:rgba(255,255,255,.3);line-height:1.9;border-top:1px solid var(--border);padding-top:28px" data-i18n="guide_legal_text">THIRZE® is part of the institutional ecosystem of ZENTHERA BIOPHARMA. This material is intended for informational and institutional purposes only.</p>
+        </div>
+      </div>
+    </section>
+  </div><!-- /page-guide -->
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div>
+          <img src="mq16q58v-logo.png" alt="THIRZE" class="footer-logo" data-nav="home">
+          <p class="footer-tagline" data-i18n="footer_tagline">A Zenthera Biopharma Brand.</p>
+        </div>
+        <nav class="footer-nav">
+          <button data-nav="safety" data-i18n="nav_safety">SAFETY</button>
+          <button data-nav="contact" data-i18n="nav_contact">CONTACT</button>
+          <button data-nav="about" data-i18n="nav_about">ABOUT</button>
+          <button data-nav="guide" data-i18n="nav_guide">GUIDE</button>
+          <a href="#" data-i18n="footer_privacy">PRIVACY</a>
+          <a href="#" data-i18n="footer_legal">LEGAL</a>
+        </nav>
+      </div>
+      <p class="footer-copy" data-i18n="footer_copy">© 2026 THIRZE. A Zenthera Biopharma Brand. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+  const T = {
+    en:{nav_safety:"SAFETY",nav_contact:"CONTACT",nav_about:"ABOUT",nav_guide:"GUIDE",hero_badge:"A Zenthera Biopharma Brand",hero_line1:"Science.",hero_line2:"Performance.",hero_line3:"Purity.",hero_subtitle:"THIRZE© Tirzepatide is developed for qualified medical and professional environments, with precision, integrity and pharmaceutical discipline.",hero_cta:"EXPLORE THE SCIENCE →",pillars_eyebrow:"Our Foundation",pillars_heading:"Built on science. Driven by integrity.",pillar1_label:"MOLECULAR PRECISION",pillar1_body:"Advanced peptide engineering designed to support structural consistency, formulation integrity and controlled quality.",pillar2_label:"RIGOROUS QUALITY",pillar2_body:"Produced under controlled pharmaceutical standards to support purity, potency and consistent batch integrity.",pillar3_label:"PROFESSIONAL APPLICATION",pillar3_body:"Developed for qualified healthcare professionals, with use guided by clinical evaluation, precision and professional oversight.",science_eyebrow:"The Science",science_heading:"Built on science. Refined through discipline.",science_subheading:"THE SCIENCE OF TIRZEPATIDE",science_body:"Tirzepatide acts through dual GIP and GLP-1 receptor activity, engaging key pathways involved in metabolic regulation. Its profile represents a new generation of metabolic science, where clinical relevance begins at the receptor level.",science_cta:"LEARN MORE →",email_heading:"RECEIVE UPDATES ON THIRZE",email_placeholder:"Your email address",email_btn:"SIGN UP",email_success:"Thanks for connecting with THIRZE.",about_eyebrow:"About",about_heading:"THIRZE© is a refined tirzepatide presentation developed within the Zenthera Biopharma ecosystem for qualified medical and professional environments.",about_body:"Guided by science and pharmaceutical discipline, with focus on product integrity, controlled standards and authenticity-focused verification.",mission_label:"MISSION",mission_text:"To present THIRZE© Tirzepatide with clarity, scientific responsibility and pharmaceutical discipline — supporting qualified medical and professional environments centered on trust, consistency, authenticity and controlled standards.",vision_label:"VISION",vision_text:"To become a trusted reference in advanced tirzepatide presentation, recognized for scientific clarity, pharmaceutical discipline and authenticity-focused standards — representing a new level of confidence, consistency and sophistication within qualified medical and professional environments.",safety_eyebrow:"Safety & Storage",safety_heading:"Safety & Storage",safety_intro:"Guidelines for the safe handling, storage, and use of THIRZE© Tirzepatide.",storage_eyebrow:"Storage Guidelines",row1_label:"PRESENTATION",row1_body:"Lyophilized presentation with bacteriostatic water supports secure transport and practical storage before dilution.",row2_label:"BEFORE DILUTION",row2_body:"Maintain under controlled storage conditions, protected from heat, moisture and direct light until professional preparation.",row3_label:"AFTER DILUTION",row3_body:"THIRZE© should be refrigerated and removed only briefly for measured dosing and professional application, then returned to refrigeration.",row4_label:"PROFESSIONAL HANDLING",row4_body:"For qualified medical environments, with handling, preparation and use guided by professional standards and applicable protocols.",banner_text:"For professional medical environments only. Product authenticity, documentation, and safety guidance are our priority.",banner_cta:"CONTACT US →",contact_eyebrow:"Contact",contact_heading:"CONTACT THIRZE©",contact_tagline:"We're here to help.",contact_body:"For professional inquiries, partnerships, or additional information, our team is available to assist with clarity and discretion.",contact_email_label:"Email",contact_social_label:"Coming soon to social media",form_firstname:"First Name",form_lastname:"Last Name",form_email:"Email",form_occupation:"Occupation",form_message:"Message",form_btn:"SEND MESSAGE",form_success:"Thanks for submitting!",form_error:"Please fill in all fields with a valid email.",footer_tagline:"A Zenthera Biopharma Brand.",footer_privacy:"PRIVACY",footer_legal:"LEGAL",footer_copy:"© 2026 THIRZE. A Zenthera Biopharma Brand. All rights reserved.",guide_eyebrow:"ZENTHERA BIOPHARMA — Advanced Metabolic Research",guide_heading:"Institutional\nManual\nKit Thirze",guide_sub:"Tirzepatide 60 mg",guide_rx:"⚠ For sale by prescription only",guide_kit_eyebrow:"Kit Contents",guide_kit_heading:"THIRZE® Kit Contents",guide_kit_item1:"THIRZE® Vial",guide_kit_item1_sub:"Tirzepatide 60mg",guide_kit_item2:"Bacteriostatic Water",guide_kit_item2_sub:"4mL",guide_kit_item3:"Authentication Card",guide_kit_item3_sub:"Official verification",guide_kit_item4:"Premium Packaging",guide_kit_item4_sub:"Institutional presentation",guide_kit_item5:"Digital Material",guide_kit_item5_sub:"Institutional documentation",guide_kit_item6:"Dilution Guide",guide_kit_item6_sub:"Step-by-step protocol",guide_dil_eyebrow:"Dilution Reference",guide_dil_heading:"Dilution Reference",guide_dil_col1:"Dose",guide_dil_col2:"Insulin Syringe U-100",guide_dil_col3:"Units in Syringe",guide_dil_note:"Concentration: 60mg/mL — Reconstituted with 3mL BAC Water",guide_instr_heading:"General Instructions",guide_instr1:"Reconstitute with 3mL BAC Water (concentration: 60mg/mL)",guide_instr2:"Subcutaneous application",guide_instr3:"Use insulin syringe (1mL) for precision",guide_instr4:"Rotate injection sites: abdomen, thigh, arm",guide_yield_heading:"Yield per Vial",guide_yield1_label:"~24 doses",guide_yield1_dose:"2.5 mg",guide_yield2_label:"~12 doses",guide_yield2_dose:"5.0 mg",guide_yield3:"GMP/ISO Certified",guide_dil_warning:"Exclusive use for qualified medical environments. Preparation, dosage and application must be conducted by a licensed healthcare professional.",guide_auth_eyebrow:"Authenticity & Traceability",guide_auth_heading:"Authenticity & Traceability",guide_step1_label:"Locate the Code",guide_step1_body:"Find the authentication code printed on the card included inside the product packaging.",guide_step2_label:"Access the System",guide_step2_body:"Visit the official verification system at www.thirze.com from any device.",guide_step3_label:"Enter the Code",guide_step3_body:"Enter the authentication code to validate it against the official ZENTHERA BIOPHARMA database.",guide_step4_label:"Confirm Details",guide_step4_body:"Confirm batch number, expiration date, authentication code and traceability information.",guide_auth_notice:"Notice: If any discrepancy is identified, discontinue use and contact official support immediately.",guide_certs_eyebrow:"Certifications & Standards",guide_cert1_label:"GMP Certified",guide_cert1_body:"Good Manufacturing Practice",guide_cert2_label:"OHSAS",guide_cert2_body:"Occupational Health & Safety",guide_cert3_label:"ISO 9001",guide_cert3_body:"Quality Management System",guide_cert4_label:"Made in Germany",guide_cert4_body:"Manufactured in Germany",guide_support_eyebrow:"Official Support",guide_support_heading:"ZENTHERA BIOPHARMA",guide_support_body:"For technical inquiries, healthcare professional support, or authenticity verification, reach us through the official channels below.",guide_support_email_label:"Email",guide_support_web_label:"Website",guide_legal_text:"THIRZE® is part of the institutional ecosystem of ZENTHERA BIOPHARMA. This material is intended for informational and institutional purposes only. Any guidance related to preparation, use, protocol, clinical follow-up, administration, or therapeutic conduct must be obtained exclusively from a qualified and licensed healthcare professional."},
+    pt:{nav_safety:"SEGURANÇA",nav_contact:"CONTATO",nav_about:"SOBRE",nav_guide:"GUIA",hero_badge:"Uma Marca Zenthera Biopharma",hero_line1:"Ciência.",hero_line2:"Desempenho.",hero_line3:"Pureza.",hero_subtitle:"THIRZE© Tirzepatida é desenvolvida para ambientes médicos e profissionais qualificados, com precisão, integridade e disciplina farmacêutica.",hero_cta:"EXPLORAR A CIÊNCIA →",pillars_eyebrow:"Nossa Fundação",pillars_heading:"Construído sobre ciência. Guiado pela integridade.",pillar1_label:"PRECISÃO MOLECULAR",pillar1_body:"Engenharia peptídica avançada projetada para apoiar consistência estrutural, integridade de formulação e controle de qualidade.",pillar2_label:"QUALIDADE RIGOROSA",pillar2_body:"Produzido sob padrões farmacêuticos controlados para apoiar pureza, potência e integridade consistente de lotes.",pillar3_label:"APLICAÇÃO PROFISSIONAL",pillar3_body:"Desenvolvido para profissionais de saúde qualificados, com uso orientado por avaliação clínica, precisão e supervisão profissional.",science_eyebrow:"A Ciência",science_heading:"Construído sobre ciência. Refinado através da disciplina.",science_subheading:"A CIÊNCIA DO TIRZEPATIDA",science_body:"O Tirzepatida atua por meio de atividade dual nos receptores GIP e GLP-1, envolvendo vias-chave relacionadas à regulação metabólica. Seu perfil representa uma nova geração de ciência metabólica, onde a relevância clínica começa ao nível do receptor.",science_cta:"SAIBA MAIS →",email_heading:"RECEBA ATUALIZAÇÕES SOBRE O THIRZE",email_placeholder:"Seu endereço de e-mail",email_btn:"INSCREVER-SE",email_success:"Obrigado por se conectar com o THIRZE.",about_eyebrow:"Sobre",about_heading:"THIRZE© é uma apresentação refinada de tirzepatida desenvolvida dentro do ecossistema Zenthera Biopharma para ambientes médicos e profissionais qualificados.",about_body:"Orientado pela ciência e disciplina farmacêutica, com foco em integridade do produto, padrões controlados e verificação focada em autenticidade.",mission_label:"MISSÃO",mission_text:"Apresentar o THIRZE© Tirzepatida com clareza, responsabilidade científica e disciplina farmacêutica — apoiando ambientes médicos e profissionais qualificados centrados em confiança, consistência, autenticidade e padrões controlados.",vision_label:"VISÃO",vision_text:"Tornar-se uma referência confiável na apresentação avançada de tirzepatida, reconhecida pela clareza científica, disciplina farmacêutica e padrões focados em autenticidade — representando um novo nível de confiança, consistência e sofisticação em ambientes médicos e profissionais qualificados.",safety_eyebrow:"Segurança e Armazenamento",safety_heading:"Segurança e Armazenamento",safety_intro:"Diretrizes para manuseio seguro, armazenamento e uso do THIRZE© Tirzepatida.",storage_eyebrow:"Diretrizes de Armazenamento",row1_label:"APRESENTAÇÃO",row1_body:"A apresentação liofilizada com água bacteriostática suporta transporte seguro e armazenamento prático antes da diluição.",row2_label:"ANTES DA DILUIÇÃO",row2_body:"Manter em condições de armazenamento controladas, protegido de calor, umidade e luz direta até o preparo profissional.",row3_label:"APÓS A DILUIÇÃO",row3_body:"O THIRZE© deve ser refrigerado e retirado apenas brevemente para dosagem precisa e aplicação profissional, sendo então devolvido à refrigeração.",row4_label:"MANUSEIO PROFISSIONAL",row4_body:"Para ambientes médicos qualificados, com manuseio, preparo e uso orientados por padrões profissionais e protocolos aplicáveis.",banner_text:"Exclusivo para ambientes médicos profissionais. Autenticidade do produto, documentação e orientação de segurança são nossa prioridade.",banner_cta:"FALE CONOSCO →",contact_eyebrow:"Contato",contact_heading:"CONTATO THIRZE©",contact_tagline:"Estamos aqui para ajudar.",contact_body:"Para consultas profissionais, parcerias ou informações adicionais, nossa equipe está disponível para ajudar com clareza e discrição.",contact_email_label:"E-mail",contact_social_label:"Em breve nas redes sociais",form_firstname:"Nome",form_lastname:"Sobrenome",form_email:"E-mail",form_occupation:"Ocupação",form_message:"Mensagem",form_btn:"ENVIAR MENSAGEM",form_success:"Obrigado pelo envio!",form_error:"Por favor, preencha todos os campos com um e-mail válido.",footer_tagline:"Uma Marca Zenthera Biopharma.",footer_privacy:"PRIVACIDADE",footer_legal:"LEGAL",footer_copy:"© 2026 THIRZE. Uma Marca Zenthera Biopharma. Todos os direitos reservados.",guide_eyebrow:"ZENTHERA BIOPHARMA — Pesquisa Metabólica Avançada",guide_heading:"Manual\nInstitucional\nKit Thirze",guide_sub:"Tirzepatida 60 mg",guide_rx:"⚠ Venda sob prescrição médica",guide_kit_eyebrow:"Conteúdo do Kit",guide_kit_heading:"Conteúdo do Kit THIRZE®",guide_kit_item1:"Frasco THIRZE®",guide_kit_item1_sub:"Tirzepatida 60mg",guide_kit_item2:"Água Bacteriostática",guide_kit_item2_sub:"4mL",guide_kit_item3:"Cartão de Autenticação",guide_kit_item3_sub:"Verificação oficial",guide_kit_item4:"Embalagem Premium",guide_kit_item4_sub:"Apresentação institucional",guide_kit_item5:"Material Digital",guide_kit_item5_sub:"Documentação institucional",guide_kit_item6:"Guia de Diluição",guide_kit_item6_sub:"Protocolo passo a passo",guide_dil_eyebrow:"Referência de Diluição",guide_dil_heading:"Referência de Diluição",guide_dil_col1:"Dose",guide_dil_col2:"Seringa Insulina U-100",guide_dil_col3:"UI na Seringa",guide_dil_note:"Concentração: 60mg/mL — Reconstituído com 3mL de BAC Water",guide_instr_heading:"Instruções Gerais",guide_instr1:"Reconstituir com 3mL de BAC Water (concentração: 60mg/mL)",guide_instr2:"Aplicação subcutânea",guide_instr3:"Usar seringa de insulina (1mL) para precisão",guide_instr4:"Rotacionar locais: abdômen, coxa, braço",guide_yield_heading:"Rendimento por Frasco",guide_yield1_label:"~24 doses",guide_yield1_dose:"2,5 mg",guide_yield2_label:"~12 doses",guide_yield2_dose:"5,0 mg",guide_yield3:"Produto certificado GMP/ISO",guide_dil_warning:"Uso exclusivo para ambientes médicos qualificados. Preparação, dosagem e aplicação devem ser conduzidas por profissional de saúde habilitado.",guide_auth_eyebrow:"Autenticidade e Rastreabilidade",guide_auth_heading:"Autenticidade e Rastreabilidade",guide_step1_label:"Localize o Código",guide_step1_body:"Encontre o código de autenticação impresso no cartão incluído dentro da embalagem do produto.",guide_step2_label:"Acesse o Sistema",guide_step2_body:"Acesse o sistema de verificação oficial em www.thirze.com de qualquer dispositivo.",guide_step3_label:"Insira o Código",guide_step3_body:"Insira o código de autenticação para validá-lo no banco de dados oficial da ZENTHERA BIOPHARMA.",guide_step4_label:"Confirme os Dados",guide_step4_body:"Confirme número do lote, data de validade, código de autenticação e informações de rastreabilidade.",guide_auth_notice:"Aviso: Se qualquer discrepância for identificada, interrompa o uso e entre em contato com o suporte oficial imediatamente.",guide_certs_eyebrow:"Certificações e Padrões",guide_cert1_label:"Certificado GMP",guide_cert1_body:"Good Manufacturing Practice",guide_cert2_label:"OHSAS",guide_cert2_body:"Saúde e Segurança Ocupacional",guide_cert3_label:"ISO 9001",guide_cert3_body:"Sistema de Gestão da Qualidade",guide_cert4_label:"Fabricado na Alemanha",guide_cert4_body:"Manufactured in Germany",guide_support_eyebrow:"Suporte Oficial",guide_support_heading:"ZENTHERA BIOPHARMA",guide_support_body:"Para consultas técnicas, suporte a profissionais de saúde ou verificação de autenticidade, entre em contato pelos canais oficiais abaixo.",guide_support_email_label:"E-mail",guide_support_web_label:"Website",guide_legal_text:"THIRZE® faz parte do ecossistema institucional da ZENTHERA BIOPHARMA. Este material destina-se apenas a fins informativos e institucionais. Qualquer orientação relacionada à preparação, uso, protocolo, acompanhamento clínico, administração ou conduta terapêutica deve ser obtida exclusivamente de um profissional de saúde qualificado e licenciado."},
+    es:{nav_safety:"SEGURIDAD",nav_contact:"CONTACTO",nav_about:"ACERCA DE",nav_guide:"GUÍA",hero_badge:"Una Marca Zenthera Biopharma",hero_line1:"Ciencia.",hero_line2:"Rendimiento.",hero_line3:"Pureza.",hero_subtitle:"THIRZE© Tirzepatida está desarrollada para entornos médicos y profesionales cualificados, con precisión, integridad y disciplina farmacéutica.",hero_cta:"EXPLORAR LA CIENCIA →",pillars_eyebrow:"Nuestra Fundación",pillars_heading:"Construido sobre la ciencia. Impulsado por la integridad.",pillar1_label:"PRECISIÓN MOLECULAR",pillar1_body:"Ingeniería peptídica avanzada diseñada para apoyar la consistencia estructural, la integridad de la formulación y la calidad controlada.",pillar2_label:"CALIDAD RIGUROSA",pillar2_body:"Producido bajo estándares farmacéuticos controlados para apoyar la pureza, potencia e integridad consistente de lotes.",pillar3_label:"APLICACIÓN PROFESIONAL",pillar3_body:"Desarrollado para profesionales sanitarios cualificados, con uso guiado por evaluación clínica, precisión y supervisión profesional.",science_eyebrow:"La Ciencia",science_heading:"Construido sobre la ciencia. Refinado a través de la disciplina.",science_subheading:"LA CIENCIA DEL TIRZEPATIDA",science_body:"El tirzepatida actúa a través de la actividad dual de los receptores GIP y GLP-1, involucrando vías clave relacionadas con la regulación metabólica. Su perfil representa una nueva generación de ciencia metabólica, donde la relevancia clínica comienza a nivel del receptor.",science_cta:"APRENDER MÁS →",email_heading:"RECIBA ACTUALIZACIONES SOBRE THIRZE",email_placeholder:"Su dirección de correo electrónico",email_btn:"SUSCRIBIRSE",email_success:"Gracias por conectar con THIRZE.",about_eyebrow:"Acerca de",about_heading:"THIRZE© es una presentación refinada de tirzepatida desarrollada dentro del ecosistema Zenthera Biopharma para entornos médicos y profesionales cualificados.",about_body:"Guiado por la ciencia y la disciplina farmacéutica, con enfoque en la integridad del producto, estándares controlados y verificación centrada en la autenticidad.",mission_label:"MISIÓN",mission_text:"Presentar THIRZE© Tirzepatida con claridad, responsabilidad científica y disciplina farmacéutica — apoyando entornos médicos y profesionales cualificados centrados en la confianza, la consistencia, la autenticidad y los estándares controlados.",vision_label:"VISIÓN",vision_text:"Convertirse en una referencia de confianza en la presentación avanzada de tirzepatida, reconocida por la claridad científica, la disciplina farmacéutica y los estándares orientados a la autenticidad — representando un nuevo nivel de confianza, consistencia y sofisticación en entornos médicos y profesionales cualificados.",safety_eyebrow:"Seguridad y Almacenamiento",safety_heading:"Seguridad y Almacenamiento",safety_intro:"Pautas para el manejo seguro, almacenamiento y uso del THIRZE© Tirzepatida.",storage_eyebrow:"Directrices de Almacenamiento",row1_label:"PRESENTACIÓN",row1_body:"La presentación liofilizada con agua bacteriostática favorece el transporte seguro y el almacenamiento práctico antes de la dilución.",row2_label:"ANTES DE LA DILUCIÓN",row2_body:"Mantener en condiciones de almacenamiento controladas, protegido del calor, humedad y luz directa hasta la preparación profesional.",row3_label:"DESPUÉS DE LA DILUCIÓN",row3_body:"THIRZE© debe refrigerarse y retirarse solo brevemente para dosificación medida y aplicación profesional, luego devolver a refrigeración.",row4_label:"MANEJO PROFESIONAL",row4_body:"Para entornos médicos cualificados, con manejo, preparación y uso guiados por estándares profesionales y protocolos aplicables.",banner_text:"Solo para entornos médicos profesionales. La autenticidad del producto, la documentación y la orientación de seguridad son nuestra prioridad.",banner_cta:"CONTÁCTENOS →",contact_eyebrow:"Contacto",contact_heading:"CONTACTO THIRZE©",contact_tagline:"Estamos aquí para ayudar.",contact_body:"Para consultas profesionales, asociaciones o información adicional, nuestro equipo está disponible para asistir con claridad y discreción.",contact_email_label:"Correo electrónico",contact_social_label:"Próximamente en redes sociales",form_firstname:"Nombre",form_lastname:"Apellido",form_email:"Correo electrónico",form_occupation:"Ocupación",form_message:"Mensaje",form_btn:"ENVIAR MENSAJE",form_success:"¡Gracias por enviar!",form_error:"Por favor, complete todos los campos con un correo electrónico válido.",footer_tagline:"Una Marca Zenthera Biopharma.",footer_privacy:"PRIVACIDAD",footer_legal:"LEGAL",footer_copy:"© 2026 THIRZE. Una Marca Zenthera Biopharma. Todos los derechos reservados.",guide_eyebrow:"ZENTHERA BIOPHARMA — Investigación Metabólica Avanzada",guide_heading:"Manual\nInstitucional\nKit Thirze",guide_sub:"Tirzepatida 60 mg",guide_rx:"⚠ Venta bajo prescripción médica",guide_kit_eyebrow:"Contenido del Kit",guide_kit_heading:"Contenido del Kit THIRZE®",guide_kit_item1:"Vial THIRZE®",guide_kit_item1_sub:"Tirzepatida 60mg",guide_kit_item2:"Agua Bacteriostática",guide_kit_item2_sub:"4mL",guide_kit_item3:"Tarjeta de Autenticación",guide_kit_item3_sub:"Verificación oficial",guide_kit_item4:"Packaging Premium",guide_kit_item4_sub:"Presentación institucional",guide_kit_item5:"Material Digital",guide_kit_item5_sub:"Documentación institucional",guide_kit_item6:"Guía de Dilución",guide_kit_item6_sub:"Protocolo paso a paso",guide_dil_eyebrow:"Referencia de Dilución",guide_dil_heading:"Referencia de Dilución",guide_dil_col1:"Dosis",guide_dil_col2:"Jeringa de Insulina U-100",guide_dil_col3:"UI en la Jeringa",guide_dil_note:"Concentración: 60mg/mL — Reconstituido con 3mL de BAC Water",guide_instr_heading:"Instrucciones Generales",guide_instr1:"Reconstituir con 3mL de BAC Water (concentración: 60mg/mL)",guide_instr2:"Aplicación subcutánea",guide_instr3:"Usar jeringa de insulina (1mL) para precisión",guide_instr4:"Rotar sitios de inyección: abdomen, muslo, brazo",guide_yield_heading:"Rendimiento por Frasco",guide_yield1_label:"~24 dosis",guide_yield1_dose:"2,5 mg",guide_yield2_label:"~12 dosis",guide_yield2_dose:"5,0 mg",guide_yield3:"Producto certificado GMP/ISO",guide_dil_warning:"Uso exclusivo para entornos médicos cualificados. La preparación, dosificación y aplicación deben ser realizadas por un profesional de salud habilitado.",guide_auth_eyebrow:"Autenticidad y Trazabilidad",guide_auth_heading:"Autenticidad y Trazabilidad",guide_step1_label:"Localizar el Código",guide_step1_body:"Encuentra el código de autenticación impresso en la tarjeta incluida dentro del envase del producto.",guide_step2_label:"Acceder al Sistema",guide_step2_body:"Visita el sistema de verificación oficial en www.thirze.com desde cualquier dispositivo.",guide_step3_label:"Ingresar el Código",guide_step3_body:"Ingresa el código de autenticación para validarlo contra la base de datos oficial de ZENTHERA BIOPHARMA.",guide_step4_label:"Confirmar Detalles",guide_step4_body:"Confirma número de lote, fecha de vencimiento, código de autenticación e información de trazabilidad.",guide_auth_notice:"Aviso: Si se identifica alguna discrepancia, interrumpa el uso y contacte al soporte oficial de inmediato.",guide_certs_eyebrow:"Certificaciones y Estándares",guide_cert1_label:"GMP Certificado",guide_cert1_body:"Good Manufacturing Practice",guide_cert2_label:"OHSAS",guide_cert2_body:"Salud y Seguridad Ocupacional",guide_cert3_label:"ISO 9001",guide_cert3_body:"Sistema de Gestión de Calidad",guide_cert4_label:"Fabricado en Alemania",guide_cert4_body:"Manufactured in Germany",guide_support_eyebrow:"Soporte Oficial",guide_support_heading:"ZENTHERA BIOPHARMA",guide_support_body:"Para consultas técnicas, soporte a profesionales de la salud o verificación de autenticidad, contáctenos a través de los canales oficiales.",guide_support_email_label:"Correo electrónico",guide_support_web_label:"Sitio web",guide_legal_text:"THIRZE® es parte del ecosistema institucional de ZENTHERA BIOPHARMA. Este material está destinado únicamente a fines informativos e institucionales. Cualquier orientación relacionada con la preparación, uso, protocolo, seguimiento clínico, administración o conducta terapéutica debe obtenerse exclusivamente de un profesional de la salud cualificado y con licencia."},
+    de:{nav_safety:"SICHERHEIT",nav_contact:"KONTAKT",nav_about:"ÜBER UNS",nav_guide:"LEITFADEN",hero_badge:"Eine Marke von Zenthera Biopharma",hero_line1:"Wissenschaft.",hero_line2:"Leistung.",hero_line3:"Reinheit.",hero_subtitle:"THIRZE© Tirzepatid wurde für qualifizierte medizinische und professionelle Umgebungen entwickelt, mit Präzision, Integrität und pharmazeutischer Disziplin.",hero_cta:"WISSENSCHAFT ERKUNDEN →",pillars_eyebrow:"Unsere Grundlage",pillars_heading:"Auf Wissenschaft aufgebaut. Von Integrität geleitet.",pillar1_label:"MOLEKULARE PRÄZISION",pillar1_body:"Fortschrittliche Peptidtechnik zur Unterstützung struktureller Konsistenz, Formulierungsintegrität und kontrollierter Qualität.",pillar2_label:"STRENGE QUALITÄT",pillar2_body:"Produziert nach kontrollierten pharmazeutischen Standards zur Unterstützung von Reinheit, Wirksamkeit und konsistenter Chargenintegrität.",pillar3_label:"PROFESSIONELLE ANWENDUNG",pillar3_body:"Entwickelt für qualifizierte medizinische Fachkräfte, mit Anwendung unter klinischer Beurteilung, Präzision und professioneller Aufsicht.",science_eyebrow:"Die Wissenschaft",science_heading:"Auf Wissenschaft aufgebaut. Durch Disziplin verfeinert.",science_subheading:"DIE WISSENSCHAFT VON TIRZEPATID",science_body:"Tirzepatid wirkt durch duale GIP- und GLP-1-Rezeptoraktivität und aktiviert wichtige Stoffwechselregulationswege. Sein Profil repräsentiert eine neue Generation der Stoffwechselwissenschaft, bei der die klinische Relevanz auf Rezeptorebene beginnt.",science_cta:"MEHR ERFAHREN →",email_heading:"ERHALTEN SIE UPDATES ZU THIRZE",email_placeholder:"Ihre E-Mail-Adresse",email_btn:"ANMELDEN",email_success:"Danke, dass Sie sich mit THIRZE verbunden haben.",about_eyebrow:"Über uns",about_heading:"THIRZE© ist eine verfeinerte Tirzepatid-Präsentation, die im Zenthera Biopharma-Ökosystem für qualifizierte medizinische und professionelle Umgebungen entwickelt wurde.",about_body:"Geleitet von Wissenschaft und pharmazeutischer Disziplin, mit Fokus auf Produktintegrität, kontrollierten Standards und authentizitätsorientierter Verifizierung.",mission_label:"MISSION",mission_text:"THIRZE© Tirzepatid mit Klarheit, wissenschaftlicher Verantwortung und pharmazeutischer Disziplin zu präsentieren — zur Unterstützung qualifizierter medizinischer und professioneller Umgebungen, die auf Vertrauen, Konsistenz, Authentizität und kontrollierten Standards basieren.",vision_label:"VISION",vision_text:"Eine vertrauenswürdige Referenz in der fortschrittlichen Tirzepatid-Präsentation zu werden, anerkannt für wissenschaftliche Klarheit, pharmazeutische Disziplin und authentizitätsorientierte Standards — ein neues Niveau an Vertrauen, Konsistenz und Raffinesse in qualifizierten medizinischen und professionellen Umgebungen darstellend.",safety_eyebrow:"Sicherheit & Lagerung",safety_heading:"Sicherheit & Lagerung",safety_intro:"Richtlinien für den sicheren Umgang, die Lagerung und Verwendung von THIRZE© Tirzepatid.",storage_eyebrow:"Lagerungsrichtlinien",row1_label:"PRÄSENTATION",row1_body:"Die lyophilisierte Präsentation mit bakteriostatischem Wasser unterstützt einen sicheren Transport und eine praktische Lagerung vor der Verdünnung.",row2_label:"VOR DER VERDÜNNUNG",row2_body:"Unter kontrollierten Lagerbedingungen aufbewahren, vor Hitze, Feuchtigkeit und direktem Licht bis zur professionellen Zubereitung schützen.",row3_label:"NACH DER VERDÜNNUNG",row3_body:"THIRZE© sollte gekühlt werden und nur kurz zur präzisen Dosierung und professionellen Anwendung entnommen werden, dann zurück in die Kühlung.",row4_label:"PROFESSIONELLER UMGANG",row4_body:"Für qualifizierte medizinische Umgebungen, mit Handhabung, Zubereitung und Anwendung gemäß professionellen Standards und geltenden Protokollen.",banner_text:"Nur für professionelle medizinische Umgebungen. Produktauthentizität, Dokumentation und Sicherheitsberatung haben für uns höchste Priorität.",banner_cta:"KONTAKTIEREN SIE UNS →",contact_eyebrow:"Kontakt",contact_heading:"KONTAKT THIRZE©",contact_tagline:"Wir sind hier, um zu helfen.",contact_body:"Für professionelle Anfragen, Partnerschaften oder zusätzliche Informationen steht unser Team klar und diskret zur Verfügung.",contact_email_label:"E-Mail",contact_social_label:"Demnächst in sozialen Medien",form_firstname:"Vorname",form_lastname:"Nachname",form_email:"E-Mail",form_occupation:"Beruf",form_message:"Nachricht",form_btn:"NACHRICHT SENDEN",form_success:"Danke für Ihre Nachricht!",form_error:"Bitte füllen Sie alle Felder mit einer gültigen E-Mail-Adresse aus.",footer_tagline:"Eine Marke von Zenthera Biopharma.",footer_privacy:"DATENSCHUTZ",footer_legal:"IMPRESSUM",footer_copy:"© 2026 THIRZE. Eine Marke von Zenthera Biopharma. Alle Rechte vorbehalten.",guide_eyebrow:"ZENTHERA BIOPHARMA — Fortschrittliche Stoffwechselforschung",guide_heading:"Institutionelles\nKit-Handbuch\nThirze",guide_sub:"Tirzepatid 60 mg",guide_rx:"⚠ Nur auf ärztliche Verschreibung",guide_kit_eyebrow:"Kit-Inhalt",guide_kit_heading:"THIRZE® Kit-Inhalt",guide_kit_item1:"THIRZE® Fläschchen",guide_kit_item1_sub:"Tirzepatid 60mg",guide_kit_item2:"Bakteriostatisches Wasser",guide_kit_item2_sub:"4mL",guide_kit_item3:"Authentizierungskarte",guide_kit_item3_sub:"Offizielle Verifizierung",guide_kit_item4:"Premium-Verpackung",guide_kit_item4_sub:"Institutionelle Präsentation",guide_kit_item5:"Digitales Material",guide_kit_item5_sub:"Institutionelle Dokumentation",guide_kit_item6:"Verdünnungsanleitung",guide_kit_item6_sub:"Schritt-für-Schritt-Protokoll",guide_dil_eyebrow:"Verdünnungsreferenz",guide_dil_heading:"Verdünnungsreferenz",guide_dil_col1:"Dosis",guide_dil_col2:"Insulinspritze U-100",guide_dil_col3:"IE in der Spritze",guide_dil_note:"Konzentration: 60mg/mL — Rekonstituiert mit 3mL BAC Water",guide_instr_heading:"Allgemeine Anweisungen",guide_instr1:"Rekonstituieren mit 3mL BAC Water (Konzentration: 60mg/mL)",guide_instr2:"Subkutane Anwendung",guide_instr3:"Insulinspritze (1mL) für Präzision verwenden",guide_instr4:"Injektionsstellen rotieren: Bauch, Oberschenkel, Arm",guide_yield_heading:"Ausbeute pro Fläschchen",guide_yield1_label:"~24 Dosen",guide_yield1_dose:"2,5 mg",guide_yield2_label:"~12 Dosen",guide_yield2_dose:"5,0 mg",guide_yield3:"GMP/ISO-zertifiziertes Produkt",guide_dil_warning:"Ausschließlich für qualifizierte medizinische Umgebungen. Zubereitung, Dosierung und Anwendung müssen von einem zugelassenen Gesundheitsfachmann durchgeführt werden.",guide_auth_eyebrow:"Authentizität & Rückverfolgbarkeit",guide_auth_heading:"Authentizität & Rückverfolgbarkeit",guide_step1_label:"Code suchen",guide_step1_body:"Finden Sie den Authentifizierungscode auf der Karte, die der Produktverpackung beiliegt.",guide_step2_label:"System aufrufen",guide_step2_body:"Besuchen Sie das offizielle Verifizierungssystem unter www.thirze.com von jedem Gerät aus.",guide_step3_label:"Code eingeben",guide_step3_body:"Geben Sie den Authentifizierungscode ein, um ihn gegen die offizielle ZENTHERA BIOPHARMA-Datenbank zu validieren.",guide_step4_label:"Details bestätigen",guide_step4_body:"Bestätigen Sie Chargennummer, Ablaufdatum, Authentifizierungscode und Rückverfolgbarkeitsinformationen.",guide_auth_notice:"Hinweis: Wenn eine Diskrepanz festgestellt wird, verwenden Sie das Produkt nicht weiter und kontaktieren Sie sofort den offiziellen Support.",guide_certs_eyebrow:"Zertifizierungen & Standards",guide_cert1_label:"GMP-zertifiziert",guide_cert1_body:"Gute Herstellungspraxis",guide_cert2_label:"OHSAS",guide_cert2_body:"Arbeitssicherheit & Gesundheitsschutz",guide_cert3_label:"ISO 9001",guide_cert3_body:"Qualitätsmanagementsystem",guide_cert4_label:"Made in Germany",guide_cert4_body:"Hergestellt in Deutschland",guide_support_eyebrow:"Offizieller Support",guide_support_heading:"ZENTHERA BIOPHARMA",guide_support_body:"Für technische Anfragen, Unterstützung von Gesundheitsfachkräften oder Authentizitätsverifizierung stehen wir über die offiziellen Kanäle zur Verfügung.",guide_support_email_label:"E-Mail",guide_support_web_label:"Website",guide_legal_text:"THIRZE® ist Teil des institutionellen Ökosystems von ZENTHERA BIOPHARMA. Dieses Material dient nur zu Informations- und institutionellen Zwecken. Jede Anleitung zur Zubereitung, Anwendung, zum Protokoll, zur klinischen Nachsorge, Verabreichung oder therapeutischen Vorgehensweise muss ausschließlich von einem qualifizierten und zugelassenen Gesundheitsfachmann eingeholt werden."}
+  };
+  const PAGES=['home','about','safety','contact','guide'];
+  const PAGE_TITLES={home:'THIRZE© — Science. Performance. Purity.',about:'THIRZE© — About',safety:'THIRZE© — Safety & Storage',contact:'THIRZE© — Contact',guide:'THIRZE© — Institutional Guide'};
+  let currentPage='home';
+  function navigate(page){
+    if(!PAGES.includes(page))page='home';
+    currentPage=page;
+    PAGES.forEach(p=>{const el=document.getElementById('page-'+p);if(el)el.hidden=(p!==page)});
+    window.scrollTo(0,0);
+    document.title=PAGE_TITLES[page]||PAGE_TITLES.home;
+    history.pushState(null,'','#'+page);
+    updateNavActive();closeMobileNav();
+    setTimeout(observeFadeUps,50);
+  }
+  function updateNavActive(){document.querySelectorAll('[data-nav]').forEach(el=>el.classList.toggle('active',el.dataset.nav===currentPage))}
+  document.addEventListener('click',e=>{const el=e.target.closest('[data-nav]');if(el){e.preventDefault();navigate(el.dataset.nav)}});
+  window.addEventListener('popstate',()=>{const hash=location.hash.replace('#','')||'home';navigate(hash)});
+  function observeFadeUps(){const io=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target)}})},{threshold:0.12});document.querySelectorAll('.fade-up:not(.visible)').forEach(el=>io.observe(el))}
+  const FLAG_SVG={en:'<svg width="24" height="18" viewBox="0 0 24 18" xmlns="http://www.w3.org/2000/svg" style="border-radius:2px;display:block"><rect width="24" height="18" fill="#B22234"/><rect y="1.38" width="24" height="1.38" fill="#fff"/><rect y="4.15" width="24" height="1.38" fill="#fff"/><rect y="6.92" width="24" height="1.38" fill="#fff"/><rect y="9.69" width="24" height="1.38" fill="#fff"/><rect y="12.46" width="24" height="1.38" fill="#fff"/><rect y="15.23" width="24" height="1.38" fill="#fff"/><rect width="10" height="9.69" fill="#3C3B6E"/></svg>',pt:'<svg width="24" height="18" viewBox="0 0 24 18" xmlns="http://www.w3.org/2000/svg" style="border-radius:2px;display:block"><rect width="24" height="18" fill="#009c3b"/><polygon points="12,2 22.5,9 12,16 1.5,9" fill="#FFDF00"/><circle cx="12" cy="9" r="3.6" fill="#002776"/><rect x="8.4" y="8.3" width="7.2" height="1.4" fill="#fff" rx="0.7"/></svg>',es:'<svg width="24" height="18" viewBox="0 0 24 18" xmlns="http://www.w3.org/2000/svg" style="border-radius:2px;display:block"><rect width="24" height="18" fill="#c60b1e"/><rect y="4.5" width="24" height="9" fill="#ffc400"/></svg>',de:'<svg width="24" height="18" viewBox="0 0 24 18" xmlns="http://www.w3.org/2000/svg" style="border-radius:2px;display:block"><rect width="24" height="18" fill="#000"/><rect y="6" width="24" height="6" fill="#D00"/><rect y="12" width="24" height="6" fill="#FFCE00"/></svg>'};
+  let currentLang='en';
+  function detectLang(){try{const s=localStorage.getItem('thirze_lang');if(s&&T[s])return s}catch(e){}return 'en'}
+  function applyLang(lang){currentLang=lang;const t=T[lang];if(!t)return;document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.getAttribute('data-i18n');if(t[k]!==undefined)el.textContent=t[k]});document.querySelectorAll('[data-i18n-placeholder]').forEach(el=>{const k=el.getAttribute('data-i18n-placeholder');if(t[k]!==undefined)el.placeholder=t[k]});document.querySelectorAll('[data-lang-img]').forEach(el=>{try{const m=JSON.parse(el.getAttribute('data-lang-img'));if(m[lang])el.src=m[lang]}catch(e){}});document.querySelectorAll('.lang-pick-item').forEach(b=>b.classList.toggle('active',b.dataset.lang===lang));const flag=document.getElementById('langPickFlag');if(flag)flag.innerHTML=FLAG_SVG[lang]||FLAG_SVG.en;document.documentElement.lang=lang;try{localStorage.setItem('thirze_lang',lang)}catch(e){}}
+  applyLang(detectLang());
+  document.querySelectorAll('.lang-pick-item').forEach(btn=>{btn.addEventListener('click',e=>{e.stopPropagation();applyLang(btn.dataset.lang);document.getElementById('langPicker').classList.remove('open')})});
+  document.getElementById('langPickBtn').addEventListener('click',e=>{e.stopPropagation();document.getElementById('langPicker').classList.toggle('open')});
+  document.addEventListener('click',()=>{const p=document.getElementById('langPicker');if(p)p.classList.remove('open')});
+  const navbar=document.getElementById('navbar');
+  window.addEventListener('scroll',()=>{navbar.classList.toggle('scrolled',window.scrollY>80)},{passive:true});
+  const ham=document.getElementById('hamburger'),mobNav=document.getElementById('mobileNav');
+  ham.addEventListener('click',()=>{ham.classList.toggle('open');mobNav.classList.toggle('open')});
+  function closeMobileNav(){ham.classList.remove('open');mobNav.classList.remove('open')}
+  document.getElementById('emailBtn').addEventListener('click',()=>{const inp=document.getElementById('emailInput'),form=document.getElementById('emailForm');if(!inp.value.trim()||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(inp.value)){form.classList.add('error');return}form.classList.remove('error');const email=inp.value.trim();const subject=encodeURIComponent('Quero receber novidades sobre a Thirze');const body=encodeURIComponent('Quero receber novidades sobre a Thirze\n\nEmail: '+email);window.location.href='mailto:support@thirze.com?subject='+subject+'&body='+body;form.style.display='none';const s=document.getElementById('emailSuccess');s.style.display='block';const t=T[currentLang];if(t&&t.email_success)s.textContent=t.email_success});
+  document.getElementById('formBtn').addEventListener('click',()=>{const fn=document.getElementById('f_firstname').value.trim(),ln=document.getElementById('f_lastname').value.trim(),em=document.getElementById('f_email').value.trim(),oc=document.getElementById('f_occupation').value.trim(),ms=document.getElementById('f_message').value.trim(),err=document.getElementById('formError'),t=T[currentLang];if(!fn||!ln||!em||!oc||!ms||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){err.textContent=t.form_error||'Please fill in all fields with a valid email.';err.classList.add('show');return}err.classList.remove('show');const subject=encodeURIComponent('Contato THIRZE© — '+fn+' '+ln);const body=encodeURIComponent('Nome: '+fn+' '+ln+'\nE-mail: '+em+'\nOcupação: '+oc+'\n\nMensagem:\n'+ms);window.location.href='mailto:support@thirze.com?subject='+subject+'&body='+body;document.getElementById('formWrap').style.display='none';const succ=document.getElementById('formSuccess');succ.style.display='block';document.getElementById('formSuccessText').textContent=t.form_success||'Thanks for submitting!'});
+  (function(){const hash=location.hash.replace('#','')||'home';navigate(hash)})();
+  </script>
+</body>
+</html>
